@@ -1,0 +1,59 @@
+{
+  "name": "onomica/module-newsletter",
+  "version": "1.0.0",
+  "description": "Newsletter Extension by Onomica",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "onomica",
+      "homepage": "https://onomica.com"
+    }
+  ],
+  "require": {
+    "shopware/core": "~6.6",
+    "shopware/administration": "~6.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "OnomicaNewsletter\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "OnomicaNewsletter\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "shopware-plugin-class": "OnomicaNewsletter\\OnomicaNewsletter",
+    "copyright": "onomica",
+    "label": {
+      "de-DE": "Onomica Newsletter",
+      "en-GB": "Onomica Newsletter"
+    },
+    "description": {
+      "de-DE": "Verwalten Sie Newsletter-Kampagnen einfach aus Ihrem Shopware-Shop. Mit Onomica Newsletter erstellen Sie ansprechende E-Mails, automatisieren Abonnements und steigern das Kundenengagement.",
+      "en-GB": "Easily manage newsletter campaigns from your Shopware store. With Onomica Newsletter, create engaging emails, automate subscriptions, and boost customer engagement."
+    },
+    "manufacturerLink": {
+      "de-DE": "https://www.onomica.com/",
+      "en-GB": "https://www.onomica.com/"
+    },
+    "supportLink": {
+      "de-DE": "https://www.onomica.com/",
+      "en-GB": "https://www.onomica.com/"
+    }
+  },
+  "scripts": {
+    "cs-fixer-dry": [
+      "@php ../../../vendor/bin/php-cs-fixer fix . --dry-run --rules=@PER-CS2.0,no_unused_imports"
+    ],
+    "cs-fixer": [
+      "@php ../../../vendor/bin/php-cs-fixer fix . --rules=@PER-CS2.0,no_unused_imports"
+    ],
+    "phpstan": [
+      "@php ../../../src/Core/DevOps/StaticAnalyze/phpstan-bootstrap.php",
+      "@php ../../../vendor/bin/phpstan analyze"
+    ]
+  }
+}
