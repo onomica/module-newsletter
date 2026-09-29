@@ -1,0 +1,40 @@
+# Copyright (c) 2026 Onomica
+# Licensed under the MIT License.
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  OnomicaNewsletter\Core\Content\Campaign\CampaignDefinition:
+    tags:
+      - name: shopware.entity.definition
+        entity: onomica_newsletter_campaign
+
+  OnomicaNewsletter\Core\Content\Campaign\Aggregate\Delivery\DeliveryDefinition:
+    tags:
+      - name: shopware.entity.definition
+        entity: onomica_newsletter_delivery
+
+  OnomicaNewsletter\Core\Content\Campaign\CampaignManager:
+    arguments:
+      $campaignRepository: '@onomica_newsletter_campaign.repository'
+      $deliveryRepository: '@onomica_newsletter_delivery.repository'
+      $recipientRepository: '@newsletter_recipient.repository'
+
+  OnomicaNewsletter\Core\MessageQueue\PrepareCampaignHandler: ~
+  OnomicaNewsletter\Core\MessageQueue\SendDeliveryHandler: ~
+
+  OnomicaNewsletter\Core\ScheduledTask\DispatchNewsletterCampaignsTask:
+    tags:
+      - name: shopware.scheduled.task
+
+  OnomicaNewsletter\Core\ScheduledTask\DispatchNewsletterCampaignsTaskHandler:
+    arguments:
+      $scheduledTaskRepository: '@scheduled_task.repository'
+      $exceptionLogger: '@logger'
+
+  OnomicaNewsletter\Controller\CampaignActionController:
+    public: true
+    tags:
+      - name: controller.service_arguments

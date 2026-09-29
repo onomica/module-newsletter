@@ -1,0 +1,9 @@
+{
+  "main.js": {
+    "file": "js/onomica-newsletter.js",
+    "name": "onomica-newsletter",
+    "src": "main.js",
+    "isEntry": true,
+    "css": []
+  }
+}

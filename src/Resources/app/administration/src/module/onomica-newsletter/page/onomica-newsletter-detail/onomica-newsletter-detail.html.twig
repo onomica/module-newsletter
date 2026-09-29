@@ -1,0 +1,168 @@
+{#
+  Copyright (c) 2026 Onomica
+  Licensed under the MIT License.
+#}
+
+<sw-page class="onomica-newsletter-detail">
+    <template #smart-bar-back>
+        <router-link :to="{ name: 'onomica.newsletter.index' }">
+            <sw-icon name="regular-chevron-left" small />
+        </router-link>
+    </template>
+
+    <template #smart-bar-header>
+        <h2>{{ campaign ? campaign.name || $tc('onomica-newsletter.detail.newCampaign') : '' }}</h2>
+    </template>
+
+    <template #smart-bar-actions>
+        <sw-button
+            v-if="campaign && isEditable && !isNew"
+            :disabled="isSaving"
+            @click="schedule"
+        >
+            {{ $tc('onomica-newsletter.detail.schedule') }}
+        </sw-button>
+        <sw-button
+            v-if="campaign && isEditable && !isNew"
+            :disabled="isSaving"
+            @click="sendNow"
+        >
+            {{ $tc('onomica-newsletter.detail.sendNow') }}
+        </sw-button>
+        <sw-button
+            v-if="canCancel"
+            :disabled="isSaving"
+            @click="cancel"
+        >
+            {{ $tc('onomica-newsletter.detail.cancel') }}
+        </sw-button>
+        <sw-button
+            v-if="canRetry"
+            :disabled="isSaving"
+            @click="retry"
+        >
+            {{ $tc('onomica-newsletter.detail.retry') }}
+        </sw-button>
+        <sw-button-process
+            v-if="isEditable"
+            v-model:process-success="isSaveSuccessful"
+            variant="primary"
+            :is-loading="isSaving"
+            :disabled="isSaving"
+            @click="save"
+        >
+            {{ $tc('onomica-newsletter.detail.save') }}
+        </sw-button-process>
+    </template>
+
+    <template #content>
+        <sw-card-view v-if="campaign">
+            <sw-card :title="$tc('onomica-newsletter.detail.general')" :is-loading="isLoading">
+                <sw-container columns="1fr 1fr" gap="24px">
+                    <sw-text-field
+                        v-model:value="campaign.name"
+                        :label="$tc('onomica-newsletter.detail.name')"
+                        :disabled="!isEditable"
+                        required
+                    />
+                    <sw-text-field
+                        :value="$tc(`onomica-newsletter.status.${campaign.status}`)"
+                        :label="$tc('onomica-newsletter.detail.status')"
+                        disabled
+                    />
+                    <sw-entity-single-select
+                        v-model:value="campaign.salesChannelId"
+                        entity="sales_channel"
+                        label-property="name"
+                        :label="$tc('onomica-newsletter.detail.salesChannel')"
+                        :disabled="!isEditable"
+                        required
+                    />
+                    <sw-entity-single-select
+                        v-model:value="campaign.languageId"
+                        entity="language"
+                        label-property="name"
+                        :label="$tc('onomica-newsletter.detail.language')"
+                        :disabled="!isEditable"
+                        required
+                    />
+                </sw-container>
+            </sw-card>
+
+            <sw-card :title="$tc('onomica-newsletter.detail.message')">
+                <sw-text-field
+                    v-model:value="campaign.subject"
+                    :label="$tc('onomica-newsletter.detail.subject')"
+                    :disabled="!isEditable"
+                    required
+                />
+                <sw-text-field
+                    v-model:value="campaign.previewText"
+                    :label="$tc('onomica-newsletter.detail.previewText')"
+                    :disabled="!isEditable"
+                />
+                <sw-container columns="1fr 1fr" gap="24px">
+                    <sw-text-field
+                        v-model:value="campaign.senderName"
+                        :label="$tc('onomica-newsletter.detail.senderName')"
+                        :help-text="$tc('onomica-newsletter.detail.senderNameHelp')"
+                        :disabled="!isEditable"
+                    />
+                    <sw-text-field
+                        v-model:value="campaign.senderEmail"
+                        type="email"
+                        :label="$tc('onomica-newsletter.detail.senderEmail')"
+                        :help-text="$tc('onomica-newsletter.detail.senderEmailHelp')"
+                        :disabled="!isEditable"
+                    />
+                </sw-container>
+                <sw-textarea-field
+                    v-model:value="campaign.contentHtml"
+                    :label="$tc('onomica-newsletter.detail.contentHtml')"
+                    :help-text="$tc('onomica-newsletter.detail.templateHelp')"
+                    :disabled="!isEditable"
+                    rows="16"
+                    required
+                />
+                <sw-textarea-field
+                    v-model:value="campaign.contentPlain"
+                    :label="$tc('onomica-newsletter.detail.contentPlain')"
+                    :help-text="$tc('onomica-newsletter.detail.plainHelp')"
+                    :disabled="!isEditable"
+                    rows="8"
+                />
+            </sw-card>
+
+            <sw-card :title="$tc('onomica-newsletter.detail.delivery')">
+                <sw-datepicker
+                    v-model:value="campaign.scheduledAt"
+                    date-type="datetime"
+                    :label="$tc('onomica-newsletter.detail.scheduledAt')"
+                    :disabled="!isEditable"
+                />
+                <sw-container columns="repeat(4, 1fr)" gap="24px">
+                    <sw-number-field :value="campaign.recipientCount" :label="$tc('onomica-newsletter.detail.recipientCount')" disabled />
+                    <sw-number-field :value="campaign.sentCount" :label="$tc('onomica-newsletter.detail.sentCount')" disabled />
+                    <sw-number-field :value="campaign.failedCount" :label="$tc('onomica-newsletter.detail.failedCount')" disabled />
+                    <sw-number-field :value="campaign.skippedCount" :label="$tc('onomica-newsletter.detail.skippedCount')" disabled />
+                </sw-container>
+            </sw-card>
+
+            <sw-card v-if="deliveries && deliveries.length" :title="$tc('onomica-newsletter.detail.deliveries')">
+                <sw-data-grid
+                    :data-source="deliveries"
+                    :columns="deliveryColumns"
+                    :show-actions="false"
+                    :show-selection="false"
+                >
+                    <template #column-status="{ item }">
+                        {{ $tc(`onomica-newsletter.deliveryStatus.${item.status}`) }}
+                    </template>
+                    <template #column-sentAt="{ item }">
+                        {{ item.sentAt ? dateFilter(item.sentAt) : '—' }}
+                    </template>
+                </sw-data-grid>
+            </sw-card>
+        </sw-card-view>
+    </template>
+</sw-page>

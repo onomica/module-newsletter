@@ -1,0 +1,23 @@
+{
+  "base": "/bundles/onomicanewsletter/administration/",
+  "entryPoints": {
+    "onomica-newsletter": {
+      "css": [],
+      "dynamic": [],
+      "js": [
+        "/bundles/onomicanewsletter/administration/js/onomica-newsletter.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.0.4",
+    7,
+    0,
+    4
+  ],
+  "viteServer": null
+}

@@ -11,8 +11,9 @@
     }
   ],
   "require": {
-    "shopware/core": "~6.6",
-    "shopware/administration": "~6.6"
+    "php": ">=8.2",
+    "shopware/core": "~6.6.0 || ~6.7.0",
+    "shopware/administration": "~6.6.0 || ~6.7.0"
   },
   "autoload": {
     "psr-4": {
@@ -32,7 +33,7 @@
       "en-GB": "Onomica Newsletter"
     },
     "description": {
-      "de-DE": "Verwalten Sie Newsletter-Kampagnen einfach aus Ihrem Shopware-Shop. Mit Onomica Newsletter erstellen Sie ansprechende E-Mails, automatisieren Abonnements und steigern das Kundenengagement.",
+      "de-DE": "Verwalten Sie Newsletter-Kampagnen aus Ihrem Shopware-Shop. Mit Onomica Newsletter erstellen Sie ansprechende E-Mails, automatisieren Abonnements und steigern das Kundenengagement.",
       "en-GB": "Easily manage newsletter campaigns from your Shopware store. With Onomica Newsletter, create engaging emails, automate subscriptions, and boost customer engagement."
     },
     "manufacturerLink": {
