@@ -1,0 +1,74 @@
+{
+  "onomica-newsletter": {
+    "general": {
+      "title": "Newsletter campaigns",
+      "description": "Create, schedule and monitor newsletters"
+    },
+    "list": {
+      "create": "Create campaign",
+      "name": "Name",
+      "status": "Status",
+      "salesChannel": "Sales channel",
+      "scheduledAt": "Scheduled for",
+      "recipients": "Recipients",
+      "sent": "Sent",
+      "failed": "Failed"
+    },
+    "detail": {
+      "newCampaign": "New campaign",
+      "general": "General",
+      "message": "Message",
+      "delivery": "Delivery",
+      "name": "Internal name",
+      "status": "Status",
+      "salesChannel": "Sales channel",
+      "language": "Recipient language",
+      "subject": "Subject",
+      "previewText": "Preview text",
+      "senderName": "Sender name",
+      "senderEmail": "Sender email",
+      "senderNameHelp": "Uses the sales channel name when empty.",
+      "senderEmailHelp": "Uses the sales channel mail configuration when empty.",
+      "contentHtml": "HTML content",
+      "contentPlain": "Plain text content",
+      "templateHelp": "Twig variables: campaign, recipient, previewText and salesChannel.",
+      "plainHelp": "Generated from the HTML content when empty.",
+      "scheduledAt": "Scheduled date and time",
+      "recipientCount": "Recipients",
+      "sentCount": "Sent",
+      "failedCount": "Failed",
+      "skippedCount": "Skipped",
+      "deliveries": "Latest deliveries",
+      "email": "Email",
+      "deliveryStatus": "Status",
+      "sentAt": "Sent at",
+      "error": "Error",
+      "save": "Save",
+      "schedule": "Schedule",
+      "sendNow": "Send now",
+      "cancel": "Cancel",
+      "retry": "Retry failed",
+      "saved": "Campaign saved.",
+      "saveFailed": "The campaign could not be saved.",
+      "actionFailed": "The campaign action failed.",
+      "scheduleRequired": "Choose a scheduled date and time."
+    },
+    "status": {
+      "draft": "Draft",
+      "scheduled": "Scheduled",
+      "preparing": "Preparing",
+      "sending": "Sending",
+      "completed": "Completed",
+      "failed": "Failed",
+      "cancelled": "Cancelled"
+    },
+    "deliveryStatus": {
+      "queued": "Queued",
+      "sending": "Sending",
+      "sent": "Sent",
+      "failed": "Failed",
+      "skipped": "Skipped",
+      "cancelled": "Cancelled"
+    }
+  }
+}

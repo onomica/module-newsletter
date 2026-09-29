@@ -1,0 +1,41 @@
+{#
+  Copyright (c) 2026 Onomica
+  Licensed under the MIT License.
+#}
+
+<sw-page class="onomica-newsletter-list">
+    <template #smart-bar-header>
+        <h2>{{ $tc('onomica-newsletter.general.title') }}</h2>
+    </template>
+
+    <template #smart-bar-actions>
+        <sw-button
+            v-if="acl.can('onomica_newsletter_campaign.creator')"
+            variant="primary"
+            :router-link="{ name: 'onomica.newsletter.create' }"
+        >
+            {{ $tc('onomica-newsletter.list.create') }}
+        </sw-button>
+    </template>
+
+    <template #content>
+        <sw-entity-listing
+            v-if="campaigns"
+            :items="campaigns"
+            :repository="campaignRepository"
+            :columns="columns"
+            :is-loading="isLoading"
+            :allow-edit="acl.can('onomica_newsletter_campaign.editor')"
+            :allow-delete="acl.can('onomica_newsletter_campaign.deleter')"
+            detail-route="onomica.newsletter.detail"
+            @delete-item-finish="loadCampaigns"
+        >
+            <template #column-status="{ item }">
+                {{ $tc(`onomica-newsletter.status.${item.status}`) }}
+            </template>
+            <template #column-scheduledAt="{ item }">
+                {{ item.scheduledAt ? dateFilter(item.scheduledAt, { hour: '2-digit', minute: '2-digit' }) : '—' }}
+            </template>
+        </sw-entity-listing>
+    </template>
+</sw-page>

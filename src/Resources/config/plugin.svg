@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2026 Onomica
+  Licensed under the MIT License.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="48" fill="#1f6fb2"/>
+  <rect x="42" y="67" width="172" height="122" rx="18" fill="#ffffff"/>
+  <path d="M51 82l77 60 77-60" fill="none" stroke="#1f6fb2" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M51 174l53-47M205 174l-53-47" fill="none" stroke="#1f6fb2" stroke-width="12" stroke-linecap="round"/>
+</svg>
